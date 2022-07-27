@@ -1,34 +1,19 @@
-# Foobar
+# API's for game inventory managment
 
-Foobar is a Python library for dealing with word pluralization.
+REST API's for insert ,delete and list games from Inventory
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+cd src/gameInventoryAPI/
+go build main.go
+./main
 
-```bash
-pip install foobar
-```
+postgres needs to be installed
+Query for postgres:
+psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'games'" | grep -q 1 || psql -U postgres -c "CREATE DATABASE games" &&\ psql -c "ALTER USER postgres WITH ENCRYPTED PASSWORD 'postgres';" &&\ psql -U postgres -c CREATE TABLE games (gameID varchar(50) NOT NULL,gameName varchar(50) NOT NULL,gameType varchar(50) NOT NULL,gameStudio varchar(50) NOT NULL,platform varchar(50) NOT NULL,PRIMARY KEY (id))
 
 ## Usage
 
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+GET : http://localhost:9678/games/
+DELETE : http://localhost:9678/games/<gameid>/
+LIST : http://localhost:9678/game/
