@@ -1,4 +1,4 @@
-Futurice Academy - project assignment
+#Futurice Academy - project assignment
 
 This readme is part of our Futurice Academy job application process.
 
