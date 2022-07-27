@@ -1,17 +1,34 @@
-#Futurice Academy - project assignment
+# Foobar
 
-This readme is part of our Futurice Academy job application process.
+Foobar is a Python library for dealing with word pluralization.
 
-We want to see what you can create with technology. In your application, link to a project that you've worked on and are proud of.
+## Installation
 
-If you don't have an existing project to share, don't worry.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
-Here's an idea for a project that you can build to showcase your skills in your favorite tech stack:
+```bash
+pip install foobar
+```
 
-A lot of modern development on web and mobile is built around using APIs to get, analyze and display data. GitHub's REST API offers a public interface to users, repositories and projects in GitHub. What we'd like you to do, is to build a small app that utilizes that API: it could be a portfolio-style web application to showcase user's or organization's repositories, a mobile app to follow open source project's pull requests, or a machine learning service predicting amount of contributions to a particular project, or even an interactive Power BI report with AI module and imaginative visualization.
+## Usage
 
-Surprise us with your creativity but keep in mind that you don’t need to create a full blown service. Pick a few interesting features and focus on the quality of the solution. You shouldn't spend more than a few hours or evenings on this.
+```python
+import foobar
 
-Imagine you would need to continue developing and maintaining that application for a while and consider that other people might need to work with your code (including us as reviewers).
+# returns 'words'
+foobar.pluralize('word')
 
-Choice of technologies, architecture of your solution etc. are entirely up to you. Once you are ready, please provide the source code of the application and a short explanation, e.g. in a Github repository.
+# returns 'geese'
+foobar.pluralize('goose')
+
+# returns 'phenomenon'
+foobar.singularize('phenomena')
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
