@@ -1,7 +1,5 @@
 package types
 
-const DBHOST = "127.0.0.1"
-
 const DBPORT = "5432"
 
 const DBUSER = "postgres"
