@@ -19,28 +19,29 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal(resbody, &login)
 
-	var response= types.LoginResponse{}
+	var response = types.LoginResponse{}
 
 	if login.Username == "" || login.Password == "" {
 		response = types.LoginResponse{Status: "Failure", Description: "Username/Password is missing"}
 	} else {
 		Token := GenerateSecureToken(12)
-		err := InsertAccountDataToDB(login,Token)
+		err := InsertAccountDataToDB(login, Token)
 		if err != nil {
 			response = types.LoginResponse{Status: "Failure", Description: "Username/Password is missing"}
-			_=json.NewEncoder(w).Encode(response)
+
+		} else {
+			response = types.LoginResponse{Status: "Success", Description: "Successful", Token: Token}
 		}
-		response = types.LoginResponse{Status: "Success", Description: "Successful",Token:Token}
-		_=json.NewEncoder(w).Encode(response)
+		_ = json.NewEncoder(w).Encode(response)
 	}
 }
 
-func InsertAccountDataToDB(login types.Login,Token string)error{
+func InsertAccountDataToDB(login types.Login, Token string) error {
 	db := DBConnect()
 	log.Println("Inserting Username Details into DB")
 	sqlstatement := `INSERT INTO games(username,token) VALUES($1, $2) returning id;`
 	log.Println(sqlstatement)
-	_,err := db.Conn.Query("INSERT INTO username(username,token) VALUES($1, $2)",login.Username,Token)
+	_, err := db.Conn.Query("INSERT INTO username(usern,token) VALUES($1, $2)", login.Username, Token)
 	if err != nil {
 		log.Println("DB insert Failed : %s", err)
 		return errors.New("DB insert Failed")
@@ -49,9 +50,9 @@ func InsertAccountDataToDB(login types.Login,Token string)error{
 }
 
 func GenerateSecureToken(length int) string {
-		b := make([]byte, length)
-		if _, err := rand.Read(b); err != nil {
+	b := make([]byte, length)
+	if _, err := rand.Read(b); err != nil {
 		return ""
-		}
-		return hex.EncodeToString(b)
 	}
+	return hex.EncodeToString(b)
+}

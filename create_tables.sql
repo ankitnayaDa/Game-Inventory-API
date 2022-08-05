@@ -20,7 +20,7 @@ CREATE DATABASE username;
 \c username;
 
 CREATE TABLE IF NOT EXISTS username (
-  username varchar(250) NOT NULL,
+  usern varchar(250) NOT NULL,
   token varchar(250) NOT NULL,
-  PRIMARY KEY (username)
+  PRIMARY KEY (usern)
 );
