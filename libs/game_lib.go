@@ -17,9 +17,9 @@ type Database struct {
 }
 
 //Connect to DB
-func DBConnect() Database {
+func DBConnect(dbname string) Database {
 	db := Database{}
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", "PostgreSQL", ty.DBPORT, ty.DBUSER, ty.DBPASSWORD, ty.DBNAME)
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", "PostgreSQL", ty.DBPORT, ty.DBUSER, ty.DBPASSWORD, dbname)
 	conn, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		log.Fatalf("DB Open Failed : %s", err)
@@ -46,7 +46,7 @@ func AddToInventory(w http.ResponseWriter, r *http.Request) {
 	if string(gameinv.GameID) == "" || gameinv.GameName == "" {
 		response = ty.AddToInventoryResponse{Status: "Failure", Description: "Game ID/Name is missing"}
 	} else {
-		db := DBConnect()
+		db := DBConnect("games")
 		GameID := strconv.Itoa(gameinv.GameID)
 		log.Println("Inserting game into DB")
 		log.Println("Inserting new game with ID: " + GameID + " ,name: " + gameinv.GameName + " ,gametype: " + gameinv.GameType + ",GameStudio: " + gameinv.GameStudio + ",Platform: " + gameinv.Platform)
@@ -70,7 +70,7 @@ func DeleteFromInventory(w http.ResponseWriter, r *http.Request) {
 	if gameID == "" {
 		response = ty.DeleteFromInventory{Status: "FAILURE", Description: "gameID is not present "}
 	} else {
-		db := DBConnect()
+		db := DBConnect("games")
 		log.Println("Deleting games from DB")
 		_, err := db.Conn.Query("DELETE FROM games where gameID = $1", gameID)
 		if err != nil {
@@ -83,7 +83,7 @@ func DeleteFromInventory(w http.ResponseWriter, r *http.Request) {
 }
 
 func ListInventory(w http.ResponseWriter, r *http.Request) {
-	db := DBConnect()
+	db := DBConnect("games")
 	var response = ty.DeleteFromInventory{}
 	log.Println("Getting games...")
 	rows, err := db.Conn.Query("SELECT * FROM games")

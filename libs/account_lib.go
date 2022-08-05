@@ -37,7 +37,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func InsertAccountDataToDB(login types.Login, Token string) error {
-	db := DBConnect()
+	db := DBConnect("username")
 	log.Println("Inserting Username Details into DB")
 	sqlstatement := `INSERT INTO games(username,token) VALUES($1, $2) returning id;`
 	log.Println(sqlstatement)
