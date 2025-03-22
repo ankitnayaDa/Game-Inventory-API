@@ -1,4 +1,4 @@
-## Game Inventory Management REST API
+## Game Inventory Management Using REST API
 This project implements a RESTful API for managing game inventory. It allows users to perform CRUD (Create, Read, Update, Delete) operations on game items stored in the inventory.
 
 ## Features
